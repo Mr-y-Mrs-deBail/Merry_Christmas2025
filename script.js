@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let magicActivated = false;
 
-    let rhythmInterval;
     let monitorInterval;
     const SLOW_BEAT = 350;
     const FAST_BEAT = 70;
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             crescentMoonContainer.classList.remove('moon-lit');
         }
     }
-
 
     function startTextSequence() {
         initialText.classList.remove('d-none');
@@ -201,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             treeStar.classList.add('no-dance');
         }
 
-        stopRhythm(); 
+        stopRhythm();
         
         if (floatingStarsContainer) {
             floatingStarsContainer.classList.add('no-twinkle-bright'); 
@@ -219,50 +217,27 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleSongEnd() {
         resetDecorationsToStatic(); 
         isPlaying = false;
-    }
+    }    
 
 
-    const pulseLights = () => {
-        const randomIndex = Math.floor(Math.random() * lights.length);
-        const lightToPulse = lights[randomIndex];
+function startLightPattern() {
+    lights.forEach(light => {
+        light.classList.add('alternating-pulse'); 
+        light.classList.remove('static');
+    });
+}
 
-        lightToPulse.classList.add('pulse');
+function stopRhythm() {
+    lights.forEach(light => {
+        light.classList.remove('alternating-pulse');
+        light.classList.add('static'); 
+    });
+}
 
-        setTimeout(() => {
-            lightToPulse.classList.remove('pulse');
-        }, 100);
-    };
+function startRhythm() {
+    startLightPattern();
+}
 
-    function startRhythm() {
-        stopRhythm(); 
-        lights.forEach(light => light.style.animation = 'none');
-        currentBeatInterval = SLOW_BEAT; 
-        rhythmInterval = setInterval(pulseLights, currentBeatInterval);
-        monitorInterval = setInterval(checkRhythmChange, 500);
-    }
-
-    function stopRhythm() {
-        clearInterval(rhythmInterval);
-        clearInterval(monitorInterval);
-        lights.forEach(light => light.classList.remove('pulse'));
-        lights.forEach(light => light.style.animation = 'none');
-        currentBeatInterval = SLOW_BEAT;
-    }
-
-    function checkRhythmChange() {
-        const currentTime = currentAudio.currentTime;
-        if (!isPlaying || currentAudio === audio2) return;
-
-        const changePoint = RHYTHM_CHANGES.find(change =>
-            currentTime >= change.time && change.interval !== currentBeatInterval
-        );
-
-        if (changePoint) {
-            currentBeatInterval = changePoint.interval;
-            clearInterval(rhythmInterval);
-            rhythmInterval = setInterval(pulseLights, currentBeatInterval);
-        }
-    }
 
     function enableLetters() {
         if (!magicActivated) return; 
@@ -305,43 +280,43 @@ document.addEventListener('DOMContentLoaded', () => {
         if (letterType === 'left') {
         htmlContent = `
         <div style="
-             max-width: 450px; 
-             max-height: 650px;
-             overflow-y: auto; 
-             margin: 10px auto; 
-             padding: 10px 20px 10px 10px; 
-             line-height: 1.6; 
-             font-family: 'Gochi Hand', cursive; 
-             color: #333;
-             text-align: left;
-             font-size: 1rem; 
+              max-width: 450px; 
+              max-height: 650px;
+              overflow-y: auto; 
+              margin: 10px auto; 
+              padding: 10px 20px 10px 10px; 
+              line-height: 1.6; 
+              font-family: 'Gochi Hand', cursive; 
+              color: #333;
+              text-align: left;
+              font-size: 1rem; 
         ">
         
         <p style="text-align: right; margin-bottom: 35px; font-style: italic; font-size: 0.9rem;">
-             25 de Diciembre de 2025
+              25 de Diciembre de 2025
         </p>
         
         <p style="margin-bottom: 30px; font-weight: bold; font-size: 1.1rem;">
-             Mi Querido Súper Esposo,
+              Mi Querido Súper Esposo,
         </p>
         
         <p style="text-align: justify; margin-bottom: 25px; text-indent: 5ch;">
-             En esta noche mágica, recuerda que mi corazón te busca siempre en cada estrella que parpadea. Aunque la distancia nos separe, quiero que sepas que cada latido de mi corazón lleva tu nombre, y cada milisegundo mi alma viaja hasta donde estás tú. 
+              En esta noche mágica, recuerda que mi corazón te busca siempre en cada estrella que parpadea. Aunque la distancia nos separe, quiero que sepas que cada latido de mi corazón lleva tu nombre, y cada milisegundo mi alma viaja hasta donde estás tú. 
         </p>
 
         <p style="text-align: justify; margin-bottom: 25px; text-indent: 5ch;">
-             Te amoOOOoo contando todas las luces navideñas, todas las estrellas, árboles y mucho más, no olvides multiplicarlo por el infinito cuando termines amor.
+              Te amoOOOoo contando todas las luces navideñas, todas las estrellas, árboles y mucho más, no olvides multiplicarlo por el infinito cuando termines amor.
         </p>
         
         <p style="text-align: justify; margin-bottom: 40px; text-indent: 5ch;">
-             Gracias por ser la luz que ilumina mi vida, el que con solo una sonrisa convierte un frío diciembre en la más hermosa de las primaveras.
+              Gracias por ser la luz que ilumina mi vida, el que con solo una sonrisa convierte un frío diciembre en la más hermosa de las primaveras.
         </p>
         
         <p style="text-align: right; margin-top: 40px; font-size: 1.05rem;">
-             Con todo mi amor,
+              Con todo mi amor,
         </p>
         <p style="text-align: right; font-style: italic; font-weight: bold; font-size: 1.2rem; margin-top: 5px;">
-             Tu Reyna
+              Tu Reyna
         </p>
         </div>
         `;
