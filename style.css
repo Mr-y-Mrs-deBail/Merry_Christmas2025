@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Henny+Penny&display=swap');
 
 body {
-    background: #0d1a2f;
+    background: #000000; 
     overflow: hidden;
+    transition: background 1s ease-in-out; 
+}
+
+#christmas-scene {
+    opacity: 0.15;
+    transition: opacity 1s ease-in-out; 
 }
 
 :root {
@@ -18,12 +24,20 @@ body {
     --color1: gold;
     --color2: orange;
     --color3: darkorange;
+    --night-sky-color: #000000;
     --stripe-width: 2.5vmin;
 }
 
-#christmas-scene {
-    filter: brightness(0.25) contrast(1.5) saturate(0.5); 
-    transition: filter 1.5s ease-in-out; 
+.scene-lit {
+    background: #0a0a1a !important; 
+}
+
+.scene-lit #christmas-scene { 
+    opacity: 1; 
+}
+
+.dark-mode {
+    background: #000000 !important;
 }
 
 /* Títulos*/
@@ -51,7 +65,6 @@ header {
 #song-title {
     min-height: 150px; 
 }
-
 
 #song-name {
     position: absolute;
@@ -90,14 +103,27 @@ header {
 }
 
 .tree-star-icon {
-    color: #ffdd44; 
+    color: gray; 
     font-size: 4.5em;
     position: relative;
     top: -75px; 
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10; 
+    z-index: 10;     
+    opacity: 1;
+    text-shadow: none;
+    animation: none; 
+    transition: opacity 1.5s ease-in-out, text-shadow 1.5s ease-in-out;
+}
+
+#tree-star.star-on {
+    color: #ffdd44;
+    opacity: 1;
+    text-shadow: 
+        0 0 5px #ffea00,
+        0 0 50px rgba(255, 215, 0, 0.5);
     filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
+    transform: translateX(-54%) scale(1);
 }
 
 #tree-layers {
@@ -137,11 +163,10 @@ header {
     z-index: 4; 
     background: white;
     border-radius: 40% 70% 30% 60% / 50% 30% 60% 70%; 
-    box-shadow: 0 0 15px white;
     pointer-events: none; 
-    transform: rotate(-40deg); 
+    transform: rotate(-40deg);
+    transition: box-shadow 1s; 
     background: radial-gradient(circle at 70% 30%, white 0%, #e0f2f7 100%, transparent 80%);
-    animation: snow 4s infinite ease-in-out;
 }
 
 .tree-layer::after {
@@ -151,7 +176,13 @@ header {
     background: white;
     border-radius: 15% ;
     pointer-events: none;
+    transition: box-shadow 1s;
     background: radial-gradient(circle at 30% 70%, white 0%, #f0f8ff 100%, transparent 80%);
+}
+
+#christmas-scene.scene-lit .tree-layer::before,
+#christmas-scene.scene-lit .tree-layer::after {
+    box-shadow: 0 0 15px white;
     animation: snow 4s infinite ease-in-out;
 }
 
@@ -243,7 +274,7 @@ header {
     position: absolute; 
     background-color: currentColor;
     opacity: 0.1;    
-    transition: opacity 0.5s ease-in-out; 
+    transition: opacity 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
     will-change: opacity;
 }
 
@@ -513,6 +544,13 @@ footer {
 
 /* Muérdago y Bastón */
 
+.decoration {
+    filter: none;     
+    animation: none; 
+    z-index: 10;
+    transition: filter 1s ease-out;
+}
+
 .muerdago {
     width: 55px;
     height: 55px;
@@ -526,10 +564,10 @@ footer {
 #mistletoe { top: 5%; left: 5%; }
 #candy-cane { top: 21%; right: -5%; }
 
-.decoration {
+
+#christmas-scene.scene-lit .decoration {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-    animation: float 5s ease-in-out infinite;
-    z-index: 10;
+    animation: float 5s ease-in-out infinite; 
 }
 
 @keyframes float {
@@ -542,71 +580,39 @@ footer {
 #floating-stars i {
     position: absolute;
     font-size: 1.5rem;
-    color: #ffd700;
+    color: #555555;
     opacity: 0.5;
-    text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+    text-shadow: none;   
     animation: twinkle 4s ease-in-out infinite alternate;
+    transition: color 1s, opacity 1s, text-shadow 1s;
 }
 
 .star-1 { top: 30%; left: 10%; animation-delay: 0.5s; }
 .star-2 { top: 10%; right: 10%; animation-delay: 1.5s; }
 
 @keyframes twinkle {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% { opacity: 0.5; } 
+    100% { opacity: 1; } 
+}
+
+#christmas-scene.scene-lit #floating-stars i {
+    color: #ffeb3b;
+    opacity: 0.5;
+    text-shadow: 
+        0 0 8px #fff9c4,
+        0 0 15px rgba(255, 255, 0, 0.7);
 }
 
 /* Java  */
 
-#christmas-scene.tree-lit {
-    filter: brightness(1.2) contrast(1.2) saturate(1.2); 
-}
-
-#christmas-scene.tree-lit #floating-stars i {
-    opacity: 1; 
-    color: #ffeb3b;
-    text-shadow: 
-        0 0 8px #fff9c4,
-        0 0 15px rgba(255, 255, 0, 0.7);
-    animation: twinkle-bright 4s ease-in-out infinite alternate;
-}
-
-@keyframes twinkle-bright {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
+#christmas-scene {
+    transition: opacity 1.5s ease-in-out;
 }
 
 #song-name, #final-greeting {
     transition: opacity 1s ease-out;
 }
 
-#floating-stars.no-twinkle-bright i {
-    text-shadow: 0 0 5px rgba(255, 255, 0, 0.3) !important; 
-    animation: twinkle 4s ease-in-out infinite alternate !important;
-}
-
-.tree-lit #tree-star {
-    color: var(--light-yellow);
-    text-shadow: 
-        0 0 5px #ffea00,
-        0 0 10px #ffc300,
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 50px rgba(255, 215, 0, 0.4);
-    animation: star-dance 2s infinite alternate ease-in-out; 
-}
-
-.tree-lit #tree-star.no-dance {
-    animation: none !important; 
-    transform: translateX(-50%) rotate(0deg) scale(1) !important;
-}
-
-@keyframes star-dance {
-    0% { transform: translateX(-50%) rotate(0deg) scale(1); }
-    25% { transform: translateX(-50%) rotate(5deg) scale(1.05); }
-    50% { transform: translateX(-50%) rotate(-5deg) scale(1); }
-    75% { transform: translateX(-50%) rotate(5deg) scale(1.05); }
-    100% { transform: translateX(-50%) rotate(0deg) scale(1); }
-}
 
 /* SweetAlert */
 
@@ -614,7 +620,6 @@ footer {
     background: #f7f9f9 !important;
     border-radius: 15px !important;
     font-family: "Gochi Hand", cursive;
-    border: 5px solid #c0392b;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -660,6 +665,9 @@ footer {
         width: 90%; 
         height: 550px;
     }
+    .wave1 {
+    min-height: 160px;
+}
 
     #tree-layers {
         width: 100vmin;
@@ -732,7 +740,17 @@ footer {
     height: 100%;
     border-radius: 50%;
     background: white;
-    transition: transform 0.4s;
+    transition: transform 0.4s, box-shadow 1.5s ease-in-out;
+    box-shadow: none;
+    filter: brightness(0.8);
+}
+
+#mobile-sky-decorations.sky-lit .moon-shape { 
+    box-shadow: 
+        0 0 5px #ffffff,
+        0 0 2px rgba(255, 255, 255, 0.7),
+        0 0 3px rgba(255, 255, 255, 0.5);
+    filter: brightness(1); 
 }
 
 .moon-mask {
@@ -740,10 +758,15 @@ footer {
     width: 85%;
     height: 85%;
     border-radius: 50%;
-    background: #0d1a2f;
+background: var(--night-sky-color);
     top: 8%; 
     left: -15%; 
     transition: transform 0.4s;
+}
+
+.scene-lit {
+    background: #0a0a1a !important;     
+    --night-sky-color: #0a0a1a; 
 }
 
 .m-dot {
@@ -781,9 +804,20 @@ footer {
 .mobile-star {
     position: absolute;
     fill: #ffffff;
-    opacity: 0.8;
+    filter: none;
+    opacity: 0.5 !important;
     animation: star-twinkle 2s ease-in-out infinite alternate;
+    transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out;
 }
+
+#mobile-sky-decorations.sky-lit .mobile-star {
+    filter:
+        brightness(1.1) 
+        drop-shadow(0 0 4px #fff) 
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    opacity: 1 !important; 
+}
+
 
 .star-m-1 { top: 10%; left: 5%; width: 15px; animation-delay: 0.5s; }
 .star-m-2 { top: 55%; left: 90%; width: 8px; animation-delay: 1.2s; }
@@ -805,37 +839,17 @@ footer {
     position: absolute;
     width: 160px;
     height: 100px;
-    fill: rgb(255, 255, 255);
+    fill: #ffffff; 
+    filter: brightness(1);
     animation: float 10s ease-in-out infinite alternate;
+    transition: filter 1.5s ease-in-out;
+}
+
+#mobile-sky-decorations.sky-lit .mobile-cloud-group {
+    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
 }
 
 .cloud-3 { top: 20%; left: 35%; animation-delay: 4s; }
 .cloud-4 { top: 5%; left: 5%; animation-delay: 6s; }
 .cloud-5 { top: 25%; left: 60%; animation-delay: 8s; z-index: -1; opacity: 0.80; }
 
-
-#crescent-moon-container.moon-lit .moon-shape { 
-    background: white;
-    box-shadow: 
-    0 0 5px #ffffff,
-    0 0 2px rgba(255, 255, 255, 0.7),
-    0 0 3px rgba(255, 255, 255, 0.5);
-    filter: brightness(1); 
-}
-
-.stars-lit .mobile-star {
-    filter:
-        brightness(1.1) 
-        drop-shadow(0 0 4px #fff) 
-        drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-    opacity: 1 !important; 
-}
-
-#mobile-sky-decorations.clouds-lit .mobile-cloud-group {
-    filter: 
-        drop-shadow(0 0 5px rgba(255, 255, 255, 0.8))
-        drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-    fill: #ffffff;
-    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
-    transition: filter 0.5s ease-in-out; 
-}
