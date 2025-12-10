@@ -737,6 +737,7 @@ footer {
     }
     .wave1 {
     height: 150px;
+    bottom: -50px;
 }
 
     #mistletoe { top: 40%; left: 9%; }
@@ -784,8 +785,6 @@ footer {
     overflow: hidden;
 }
 
-
-
 .moon-shape {
     position: absolute;
     width: 100%;
@@ -793,11 +792,6 @@ footer {
     border-radius: 50%;
     background: white;
     transition: transform 0.4s, box-shadow 1.5s ease-in-out;
-     box-shadow:
-        0 0 5px #ffffff,
-        0 0 2px rgba(255, 255, 255, 0.7),
-        0 0 3px rgba(255, 255, 255, 0.5);
-    filter: brightness(1);
 }
 
 
@@ -847,10 +841,6 @@ footer {
 .mobile-star {
     position: absolute;
     fill: #ffffff;    
-    filter:
-        brightness(1.1)
-        drop-shadow(0 0 4px #fff)
-        drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
     opacity: 1 !important;     
     animation: star-twinkle 2s ease-in-out infinite alternate;
     transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out;
@@ -878,7 +868,6 @@ footer {
     width: 160px;
     height: 100px;
     fill: #ffffff;    
-    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
     animation: float 10s ease-in-out infinite alternate;
     transition: filter 1.5s ease-in-out;
 }
