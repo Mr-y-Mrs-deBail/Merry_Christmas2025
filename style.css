@@ -540,7 +540,6 @@ footer {
 
 .decoration {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-    animation: float 5s ease-in-out infinite; 
     z-index: 10;
     transition: none;
 }
@@ -557,14 +556,6 @@ footer {
 
 #mistletoe { top: 5%; left: 5%; }
 #candy-cane { top: 21%; right: -5%; }
-
-
-
-@keyframes float {
-    0% { transform: translatey(0px); }
-    50% { transform: translatey(-10px); }
-    100% { transform: translatey(0px); }
-}
 
 /* Estrellas */
 
@@ -624,22 +615,23 @@ footer {
 /* Nieve acumulada */
 
 .wave1 {
-    position: absolute;
+    /* CAMBIO CLAVE: Usa fixed para que se pegue al viewport y no al contenedor */
+    position: fixed; 
     width: 100%;
     bottom: 0; 
     background: transparent;
     z-index: 125;
-    min-height: 150px;
+    min-height: 150px; 
 }
 
 @media screen and (max-width: 768px){
     #song-name {
-        top: -220px;
+        top: -160px;
         left: 45%;
     }
 
     #final-greeting {
-        top: -200px;
+        top: -145px;
         left: 30%;
     }
     
@@ -647,9 +639,7 @@ footer {
         width: 90%; 
         height: 550px;
     }
-    .wave1 {
-    min-height: 150px;
-}
+
 
     #tree-layers {
         width: 100vmin;
@@ -666,11 +656,11 @@ footer {
     }
 
     .gift-box {
-        top: -70px;
+        top: -76px;
         transform: translateY(5px);
     }
 
-    #mistletoe { top: 1%; left: 9%; }
+    #mistletoe { top: 40%; left: 9%; }
     #candy-cane { top: 25%; right: 10%; }
 
     .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
@@ -817,7 +807,7 @@ footer {
 
 .cloud-3 { top: 20%; left: 35%; animation-delay: 4s; }
 .cloud-4 { top: 5%; left: 5%; animation-delay: 6s; }
-.cloud-5 { top: 25%; left: 60%; animation-delay: 8s; z-index: -1; opacity: 0.80; }
+.cloud-5 { top: 25%; left: 65%; animation-delay: 8s; z-index: -1; opacity: 0.80; width: 120px; }
 
 @keyframes float {
     0% { transform: translateX(0); }
