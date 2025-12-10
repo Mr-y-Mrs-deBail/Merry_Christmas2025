@@ -121,12 +121,14 @@ header {
     position: relative;
     top: -75px; 
     left: 50%;
-    transform: translateX(-50%) scale(1);    z-index: 10;     
-    opacity: 1;
+    transform: translateX(-50%) scale(1); 
+    z-index: 10;     
+    opacity: 1;    
     text-shadow: 
-        0 0 5px #ffea00,
-        0 0 50px rgba(255, 215, 0, 0.5);
-    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
+        0 0 2px #fff,
+        0 0 15px #ffe066,      
+        0 0 30px rgba(255, 215, 0, 0.7),
+        0 0 50px rgba(255, 215, 0, 0.3);
 }
 
 
@@ -155,45 +157,31 @@ header {
     background: radial-gradient(at 0 0, green, darkgreen 72.5%, #0000 72.6%);
     left: 50%;
     transform: translate(-50%, 0) rotate(40deg);
-    -webkit-mask:
-        radial-gradient(50% 150% at -20% 50%, #0000 44%, #000 44.5%)
-        radial-gradient(150% 50% at 50% -20%, #0000 44%, #000 44.5%);
-    -webkit-mask-composite: destination-in;
-}
+   }
 
 .tree-layer::before {
     content: '';
     position: absolute;
-    z-index: 4; 
+    z-index: 4;     
     background: white;
     border-radius: 40% 70% 30% 60% / 50% 30% 60% 70%; 
     pointer-events: none; 
     transform: rotate(-40deg);
-    background: radial-gradient(circle at 70% 30%, white 0%, #e0f2f7 100%, transparent 80%);    
-    box-shadow: 0 0 15px white;
-    animation: snow 4s infinite ease-in-out;
+    box-shadow: 0 0 5px white; 
     transition: none;
 }
 
 .tree-layer::after {
     content: '';
     position: absolute;
-    z-index: 4;
+    z-index: 4;    
     background: white;
     border-radius: 15% ;
-    pointer-events: none;
-    background: radial-gradient(circle at 30% 70%, white 0%, #f0f8ff 100%, transparent 80%);    
-    box-shadow: 0 0 15px white;
-    animation: snow 4s infinite ease-in-out;
+    pointer-events: none;    
+    box-shadow: 0 0 5px white;
     transition: none;
 }
 
-
-@keyframes snow {
-    0% { box-shadow: 0 0 15px white; }
-    50% { box-shadow: 0 0 20px 2px #fff; }
-    100% { box-shadow: 0 0 15px white; }
-}
 
 /* Capa 1 */
 .layer-1 {
@@ -275,13 +263,16 @@ header {
     height: 12px;
     border-radius: 50%;
     position: absolute; 
-    background-color: currentColor;    
+    background-color: currentColor;
     opacity: 1;
+    
+    /* --- SIMPLIFICACIÓN DEL BOX-SHADOW A UN SOLO HALO --- */
     box-shadow: 
-        0 0 3px 1px currentColor, 
-        0 0 5px 2px rgba(255, 255, 255, 0.3); 
+        0 0 8px 3px currentColor; /* Una sola sombra fuerte y definida */
+        
     transition: none;
-    will-change: opacity, box-shadow;
+    /* will-change está bien aquí */
+    will-change: opacity, box-shadow, transform; /* Añadir transform por si parpadean con scale */
 }
 
 .light.red { color: var(--light-red); }
@@ -602,26 +593,111 @@ footer {
 
 /* Snow */
 
-#snowCanvas {
+.snow-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     z-index: 120;
     pointer-events: none;
+}
+
+.snow-container::before,
+.snow-container::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    top: -100px;
+    border-radius: 50%;
+}
+
+.snow-container::before {
+    background: white;     
+    box-shadow: 
+        10vw 10vh 0 3px #FFF, 
+        25vw 25vh 0 3px #FFF, 
+        5vw 60vh 0 4px #FFF, 
+        45vw 15vh 0 3px #FFF,
+        80vw 20vh 0 4px #FFF,
+        95vw 55vh 0 3px #FFF,
+        70vw 85vh 0 4px #FFF,
+        15vw 90vh 0 3px #FFF,
+        50vw 40vh 0 4px #FFF,
+        35vw 75vh 3px #FFF,
+        65vw 50vh 0 4px #FFF,
+        85vw 35vh 0 3px #FFF,
+        20vw 5vh 0 3px #FFF,
+        75vw 95vh 0 3px #FFF,
+        40vw 98vh 0 3px #FFF,
+        30vw 20vh 0 4px #FFF,
+        90vw 5vh 0 3px #FFF,
+        18vw 40vh 0 3px #FFF,
+        55vw 65vh 0 3px #FFF,
+        60vw 10vh 0 4px #FFF,
+        5vw 30vh 0 3px #FFF,
+        85vw 70vh 0 3px #FFF,
+        40vw 55vh 0 4px #FFF,
+        25vw 80vh 0 3px #FFF;        
+    animation: fall 20s linear infinite;
+    z-index: 10;
+}
+
+.snow-container::after {
+    background: #E0E0E0; 
+    box-shadow: 
+        5vw 5vh 0 2px #E0E0E0, 
+        15vw 35vh 0 1px #E0E0E0, 
+        25vw 55vh 0 1px #E0E0E0, 
+        35vw 95vh 0 2px #E0E0E0,
+        45vw 10vh 0 1px #E0E0E0,
+        55vw 30vh 0 1px #E0E0E0,
+        65vw 70vh 0 2px #E0E0E0,
+        75vw 5vh 0 1px #E0E0E0,
+        85vw 45vh 0 1px #E0E0E0,
+        95vw 85vh 0 1px #E0E0E0,
+        
+        12vw 70vh 0 1px #E0E0E0,
+        22vw 15vh 0 1px #E0E0E0,
+        32vw 45vh 0 2px #E0E0E0,
+        42vw 85vh 0 1px #E0E0E0,
+        52vw 5vh 0 2px #E0E0E0,
+        62vw 25vh 0 1px #E0E0E0,
+        72vw 65vh 0 1px #E0E0E0,
+        82vw 85vh 0 2px #E0E0E0,
+        92vw 35vh 0 1px #E0E0E0,
+        2vw 95vh 0 2px #E0E0E0,
+
+        30vw 50vh 0 2px #E0E0E0,
+        60vw 90vh 0 1px #E0E0E0,
+        15vw 20vh 0 2px #E0E0E0,
+        50vw 80vh 0 1px #E0E0E0,
+        90vw 25vh 0 2px #E0E0E0;
+    animation: fall 13s linear infinite; 
+    z-index: 9;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+}
+
+@keyframes fall {
+    0% { transform: translate(0, -100vh); }
+    100% { transform: translate(20vw, 100vh); }
 }
 
 /* Nieve acumulada */
 
 .wave1 {
-    /* CAMBIO CLAVE: Usa fixed para que se pegue al viewport y no al contenedor */
     position: fixed; 
     width: 100%;
+    height: 140px;
     bottom: 0; 
     background: transparent;
     z-index: 125;
-    min-height: 150px; 
 }
 
 @media screen and (max-width: 768px){
@@ -659,6 +735,9 @@ footer {
         top: -76px;
         transform: translateY(5px);
     }
+    .wave1 {
+    height: 150px;
+}
 
     #mistletoe { top: 40%; left: 9%; }
     #candy-cane { top: 25%; right: 10%; }
