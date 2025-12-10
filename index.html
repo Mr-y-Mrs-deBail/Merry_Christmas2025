@@ -14,10 +14,9 @@
         <div id="night-overlay" style="z-index: 100;"></div>
 
     
-    <div id="christmas-scene">
-    </div>
-<div class="snow-container">
-    </div>
+    <canvas id="snowCanvas"></canvas>
+  <div class="snow snow1"></div>
+  <div class="snowflake snowflake1"></div>
 
     <div id="mobile-sky-decorations" class="sky-elements-mobile sky-elements-fixed-space">
         
@@ -151,7 +150,7 @@
             </div>
         </main>
 
-        <footer class="d-flex justify-content-center align-items-end w-100 pb-3" style="z-index: 10;">
+        <div class="d-flex justify-content-center align-items-end w-100 pb-3" style="z-index: 10;">
             
             <div id="gift-box-left" class="gift-box me-5" data-gift="left">
                 <div class="present-box red-box open-box stars-box"></div>
@@ -172,19 +171,113 @@
                     <i class="fas fa-heart text-danger small-heart"></i>
                 </div>
             </div>
-        </footer>
+        </div>
 
     </div>
 
-     <div class="wave1" style="overflow: hidden;">
+     <footer class="wave1" style="overflow: hidden;">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-3.67,39.97 C151.52,115.97 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #ffffff;"></path>
             </svg>
-        </div>
+     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
+
+    <script>
+        // Copos de nieve amor
+
+const canvas = document.getElementById('snowCanvas');
+const ctx = canvas.getContext('2d');
+let snowflakes = [];
+const SNOW_COUNT = 20;
+
+const SIZES = {
+    SMALL: 1.5,
+    MEDIUM: 3.5,
+    LARGE: 5.5
+};
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Snowflake {
+    constructor(index) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        
+        const sizeKeys = Object.keys(SIZES);
+        const randomSizeKey = sizeKeys[Math.floor(Math.random() * sizeKeys.length)];
+        const baseRadius = SIZES[randomSizeKey];
+        
+        this.radius = baseRadius + (Math.random() * 1.5 - 0.75);
+        
+        this.speedY = Math.random() * 1 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.8 + 0.2;
+
+        this.angle = Math.random() * 360; 
+        this.oscillationSpeed = Math.random() * 0.02 + 0.01;
+        this.oscillationAmplitude = Math.random() * 20 + 10;
+        
+        this.shape = 'circle';
+    }
+
+
+    draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    update() {
+        this.angle += this.oscillationSpeed;
+        
+        this.y += this.speedY;
+        
+        this.x += this.speedX + Math.cos(this.angle) * (this.oscillationAmplitude * 0.01);
+
+        if (this.y > canvas.height) {
+            this.y = -this.radius; 
+            this.x = Math.random() * canvas.width;
+        }
+
+        if (this.x > canvas.width + this.radius) {
+            this.x = -this.radius;
+        } else if (this.x < -this.radius) {
+            this.x = canvas.width + this.radius;
+        }
+    }
+}
+
+let animationId = null;
+
+for (let i = 0; i < SNOW_COUNT; i++) {
+    snowflakes.push(new Snowflake(i)); 
+}
+
+function animateSnow() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+    for (const snow of snowflakes) {
+        snow.update();
+        snow.draw();
+    }
+
+    animationId = requestAnimationFrame(animateSnow);
+}
+
+animateSnow();
+    </script>
     
 </body>
 </html>
