@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     setTimeout(showNextText, interval);
                                 } else {
                                     const videoHTML = `
-                                         <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 10px;">
+                                         <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 20px;">
                                              <source src="video/video1.mp4" type="video/mp4">
                                              Ups hay un pequeño problema.
                                          </video>

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Henny+Penny&display=swap');
 
 body {
-    background: #000000; 
+    background: #000000f8; 
     overflow: hidden;
     transition: background 1s ease-in-out; 
 }
@@ -37,7 +37,7 @@ body {
     height: 100vh;
     background: #000000fa; 
     opacity: 1;
-    z-index: 100; 
+    z-index: 90; 
     transition: opacity 1.5s ease-in-out;
     pointer-events: all;
 }
@@ -605,24 +605,35 @@ footer {
 
 /* Nieve acumulada */
 
+/* Estilos Generales para la Onda (ya los tenías) */
 .wave1 {
     position: absolute; 
     width: 100%;
-    height: 140px;
+    /* Mantenemos una altura base fija por si acaso */
+    height: 140px; 
     bottom: 0; 
     background: transparent;
-    z-index: 125;
+    z-index: 125 !important;
 }
 
 @media screen and (max-width: 768px){
     #song-name {
-        top: -160px;
+        top: -140px;
         left: 45%;
     }
 
     #final-greeting {
-        top: -145px;
+        top: -125px;
         left: 30%;
+    }
+    .wave1 {
+        /*
+        Usamos 30vh (30% de la altura de la pantalla) o ajusta según la necesidad.
+        Esto le da suficiente altura para cubrir el tronco y los regalos.
+        */
+        height: 30vh;
+        /* Aseguramos que se pegue al borde inferior de la pantalla */
+        bottom: 0; 
     }
     
     .tree-fixed-size {
@@ -649,10 +660,6 @@ footer {
         top: -76px;
         transform: translateY(5px);
     }
-    .wave1 {
-    height: 148px;
-}
-
     #mistletoe { top: 40%; left: 9%; }
     #candy-cane { top: 25%; right: 10%; }
 
