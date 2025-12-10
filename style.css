@@ -25,19 +25,32 @@ body {
     --color2: orange;
     --color3: darkorange;
     --night-sky-color: #000000;
+    --sky-lit-color: #0a0a1a;
     --stripe-width: 2.5vmin;
 }
 
-.scene-lit {
-    background: #0a0a1a !important; 
+#night-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000fa; 
+    opacity: 1;
+    z-index: 100; 
+    transition: opacity 1.5s ease-in-out;
+    pointer-events: all;
 }
 
-.scene-lit #christmas-scene { 
-    opacity: 1; 
+body {
+    background: var(--sky-lit-color); 
+    overflow: hidden;
+    transition: background 1s ease-in-out; 
 }
 
-.dark-mode {
-    background: #000000 !important;
+#christmas-scene {
+    opacity: 1;
+    transition: none;
 }
 
 /* Títulos*/
@@ -48,7 +61,7 @@ header {
     top: 50%;
     transform: translateY(-50%);
     left: 0; 
-    z-index: 20; 
+    z-index: 105 !important; 
     font-family: "Henny Penny", system-ui;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -103,28 +116,19 @@ header {
 }
 
 .tree-star-icon {
-    color: gray; 
+    color: #ffdd44;
     font-size: 4.5em;
     position: relative;
     top: -75px; 
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;     
-    opacity: 1;
-    text-shadow: none;
-    animation: none; 
-    transition: opacity 1.5s ease-in-out, text-shadow 1.5s ease-in-out;
-}
-
-#tree-star.star-on {
-    color: #ffdd44;
+    transform: translateX(-50%) scale(1);    z-index: 10;     
     opacity: 1;
     text-shadow: 
         0 0 5px #ffea00,
         0 0 50px rgba(255, 215, 0, 0.5);
     filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
-    transform: translateX(-54%) scale(1);
 }
+
 
 #tree-layers {
     width: 68vmin;
@@ -165,8 +169,10 @@ header {
     border-radius: 40% 70% 30% 60% / 50% 30% 60% 70%; 
     pointer-events: none; 
     transform: rotate(-40deg);
-    transition: box-shadow 1s; 
-    background: radial-gradient(circle at 70% 30%, white 0%, #e0f2f7 100%, transparent 80%);
+    background: radial-gradient(circle at 70% 30%, white 0%, #e0f2f7 100%, transparent 80%);    
+    box-shadow: 0 0 15px white;
+    animation: snow 4s infinite ease-in-out;
+    transition: none;
 }
 
 .tree-layer::after {
@@ -176,15 +182,12 @@ header {
     background: white;
     border-radius: 15% ;
     pointer-events: none;
-    transition: box-shadow 1s;
-    background: radial-gradient(circle at 30% 70%, white 0%, #f0f8ff 100%, transparent 80%);
-}
-
-#christmas-scene.scene-lit .tree-layer::before,
-#christmas-scene.scene-lit .tree-layer::after {
+    background: radial-gradient(circle at 30% 70%, white 0%, #f0f8ff 100%, transparent 80%);    
     box-shadow: 0 0 15px white;
     animation: snow 4s infinite ease-in-out;
+    transition: none;
 }
+
 
 @keyframes snow {
     0% { box-shadow: 0 0 15px white; }
@@ -272,10 +275,13 @@ header {
     height: 12px;
     border-radius: 50%;
     position: absolute; 
-    background-color: currentColor;
-    opacity: 0.1;    
-    transition: opacity 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-    will-change: opacity;
+    background-color: currentColor;    
+    opacity: 1;
+    box-shadow: 
+        0 0 3px 1px currentColor, 
+        0 0 5px 2px rgba(255, 255, 255, 0.3); 
+    transition: none;
+    will-change: opacity, box-shadow;
 }
 
 .light.red { color: var(--light-red); }
@@ -285,18 +291,6 @@ header {
 .light.purple { color: var(--light-purple); }
 .light.orange { color: var(--light-orange); }
 .light.pink { color: var(--light-pink); }
-
-.light.alternating-pulse {
-    opacity: 1;    
-    box-shadow: 
-        0 0 5px 2px currentColor, 
-        0 0 10px 4px rgba(255, 255, 255, 0.4); 
-}
-
-.light.static {
-    opacity: 0.7; 
-    box-shadow: 0 0 3px 1px currentColor;
-}
 
 .light-1 { top: 15%; left: 80%; }
 .light-2 { top: 40%; left: 10%; }
@@ -545,10 +539,10 @@ footer {
 /* Muérdago y Bastón */
 
 .decoration {
-    filter: none;     
-    animation: none; 
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    animation: float 5s ease-in-out infinite; 
     z-index: 10;
-    transition: filter 1s ease-out;
+    transition: none;
 }
 
 .muerdago {
@@ -565,10 +559,6 @@ footer {
 #candy-cane { top: 21%; right: -5%; }
 
 
-#christmas-scene.scene-lit .decoration {
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-    animation: float 5s ease-in-out infinite; 
-}
 
 @keyframes float {
     0% { transform: translatey(0px); }
@@ -577,14 +567,18 @@ footer {
 }
 
 /* Estrellas */
+
 #floating-stars i {
     position: absolute;
-    font-size: 1.5rem;
-    color: #555555;
+    font-size: 1.5rem;    
+    color: #ffeb3b;
     opacity: 0.5;
-    text-shadow: none;   
+    text-shadow: 
+        0 0 8px #fff9c4,
+        0 0 15px rgba(255, 255, 0, 0.7);
+        
     animation: twinkle 4s ease-in-out infinite alternate;
-    transition: color 1s, opacity 1s, text-shadow 1s;
+    transition: none;
 }
 
 .star-1 { top: 30%; left: 10%; animation-delay: 0.5s; }
@@ -595,24 +589,12 @@ footer {
     100% { opacity: 1; } 
 }
 
-#christmas-scene.scene-lit #floating-stars i {
-    color: #ffeb3b;
-    opacity: 0.5;
-    text-shadow: 
-        0 0 8px #fff9c4,
-        0 0 15px rgba(255, 255, 0, 0.7);
-}
 
 /* Java  */
-
-#christmas-scene {
-    transition: opacity 1.5s ease-in-out;
-}
 
 #song-name, #final-greeting {
     transition: opacity 1s ease-out;
 }
-
 
 /* SweetAlert */
 
@@ -635,7 +617,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 99;
+    z-index: 120;
     pointer-events: none;
 }
 
@@ -646,7 +628,7 @@ footer {
     width: 100%;
     bottom: 0; 
     background: transparent;
-    z-index: 25;
+    z-index: 125;
     min-height: 150px;
 }
 
@@ -666,7 +648,7 @@ footer {
         height: 550px;
     }
     .wave1 {
-    min-height: 160px;
+    min-height: 150px;
 }
 
     #tree-layers {
@@ -717,13 +699,12 @@ footer {
 }
 
 .sky-elements-fixed-space {
-    min-height: 250px; 
+    min-height: 250px;
     width: 100%;
-    position: absolute; 
+    position: absolute;
     top: 0;
     left: 0;
 }
-
 
 #crescent-moon-container {
     position: absolute;
@@ -731,8 +712,10 @@ footer {
     right: 15%;
     width: 95px;
     height: 95px;
-    overflow: hidden; 
+    overflow: hidden;
 }
+
+
 
 .moon-shape {
     position: absolute;
@@ -741,32 +724,23 @@ footer {
     border-radius: 50%;
     background: white;
     transition: transform 0.4s, box-shadow 1.5s ease-in-out;
-    box-shadow: none;
-    filter: brightness(0.8);
-}
-
-#mobile-sky-decorations.sky-lit .moon-shape { 
-    box-shadow: 
+     box-shadow:
         0 0 5px #ffffff,
         0 0 2px rgba(255, 255, 255, 0.7),
         0 0 3px rgba(255, 255, 255, 0.5);
-    filter: brightness(1); 
+    filter: brightness(1);
 }
+
 
 .moon-mask {
     position: absolute;
     width: 85%;
     height: 85%;
     border-radius: 50%;
-background: var(--night-sky-color);
-    top: 8%; 
-    left: -15%; 
+    background: var(--sky-lit-color);
+    top: 8%;
+    left: -15%;
     transition: transform 0.4s;
-}
-
-.scene-lit {
-    background: #0a0a1a !important;     
-    --night-sky-color: #0a0a1a; 
 }
 
 .m-dot {
@@ -803,19 +777,14 @@ background: var(--night-sky-color);
 
 .mobile-star {
     position: absolute;
-    fill: #ffffff;
-    filter: none;
-    opacity: 0.5 !important;
+    fill: #ffffff;    
+    filter:
+        brightness(1.1)
+        drop-shadow(0 0 4px #fff)
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    opacity: 1 !important;     
     animation: star-twinkle 2s ease-in-out infinite alternate;
     transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out;
-}
-
-#mobile-sky-decorations.sky-lit .mobile-star {
-    filter:
-        brightness(1.1) 
-        drop-shadow(0 0 4px #fff) 
-        drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-    opacity: 1 !important; 
 }
 
 
@@ -839,17 +808,18 @@ background: var(--night-sky-color);
     position: absolute;
     width: 160px;
     height: 100px;
-    fill: #ffffff; 
-    filter: brightness(1);
+    fill: #ffffff;    
+    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
     animation: float 10s ease-in-out infinite alternate;
     transition: filter 1.5s ease-in-out;
 }
 
-#mobile-sky-decorations.sky-lit .mobile-cloud-group {
-    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
-}
 
 .cloud-3 { top: 20%; left: 35%; animation-delay: 4s; }
 .cloud-4 { top: 5%; left: 5%; animation-delay: 6s; }
 .cloud-5 { top: 25%; left: 60%; animation-delay: 8s; z-index: -1; opacity: 0.80; }
 
+@keyframes float {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(5%); }
+}

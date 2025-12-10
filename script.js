@@ -1,18 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const songTitleElement = document.getElementById('song-title');
-    const christmasScene = document.getElementById('christmas-scene');
-    const lights = document.querySelectorAll('.light');
+    const nightOverlay = document.getElementById('night-overlay');
     const letterContainers = document.querySelectorAll('.clickable-letter');
-    const treeStar = document.getElementById('tree-star');
-    const floatingStarsContainer = document.getElementById('floating-stars');    
     const initialText = document.getElementById('initial-text');
     const sequence2 = document.getElementById('sequence-2');
     const sequence3 = document.getElementById('sequence-3');
     const callToAction = document.getElementById('call-to-action');
     const songName = document.getElementById('song-name');
     const finalGreeting = document.getElementById('final-greeting');
-    const mobileSkyDecorations = document.getElementById('mobile-sky-decorations');
-    const crescentMoonContainer = document.getElementById('crescent-moon-container');
+    
     const audio1 = new Audio('music/music-1.mp3'); 
     const audio2 = new Audio('music/music-2.mp3'); 
 
@@ -26,40 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let timer1, timer2, timer3;
     let finalGreetingTimeout;
 
-   function turnOnGlow() {
-    if (mobileSkyDecorations) {
-        mobileSkyDecorations.classList.add('sky-lit');
-    }    
-}
-
-   function turnOffGlow() {
-    if (mobileSkyDecorations) {
-        mobileSkyDecorations.classList.remove('sky-lit');
-    }    
-}
-
     function activateChristmasMagic() {
         if (magicActivated) return;
+        
+        if (nightOverlay) {
+            nightOverlay.style.opacity = '0';
+            setTimeout(() => {
+                nightOverlay.style.display = 'none';
+                nightOverlay.style.pointerEvents = 'none';
+            }, 1500); 
+        }
 
         currentAudio = audio1;
         currentAudio.play();
         isPlaying = true;
         magicActivated = true;
         
-        document.body.classList.remove('dark-mode'); 
-        document.body.classList.add('scene-lit');
-        
-        if (christmasScene) {
-        christmasScene.classList.add('scene-lit'); 
-    }
-
-        if (treeStar) {
-             treeStar.classList.add('star-on');
-        }
-        
-        turnOnGlow(); 
-        startRhythm();
-
         enableLetters();
 
         finalGreetingTimeout = setTimeout(() => {
@@ -74,21 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function resetDecorationsToStatic() {
-        
         keepLettersClickable();
     }
-  
+    
     audio1.addEventListener('ended', () => {
-        
-        
         currentAudio = audio2;
         currentAudio.play();
         isPlaying = true;
-        
     });
 
     audio2.addEventListener('ended', () => {
-        
         if (finalGreetingTimeout) {
             clearTimeout(finalGreetingTimeout);
             songName.style.opacity = '0';
@@ -102,27 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (magicActivated) {
             keepLettersClickable();
         }
-
     });
-
-    function startLightPattern() {
-        lights.forEach(light => {
-            light.classList.add('alternating-pulse'); 
-            light.classList.remove('static');
-        });
-    }
-
-    function stopRhythm() {
-        lights.forEach(light => {
-            light.classList.remove('alternating-pulse');
-            light.classList.add('static'); 
-        });
-    }
-
-    function startRhythm() {
-        startLightPattern();
-    }
-
 
     function enableLetters() {
         if (!magicActivated) return; 
@@ -144,41 +97,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function keepLettersClickable() {
-         letterContainers.forEach(letter => {
+          letterContainers.forEach(letter => {
             letter.setAttribute('aria-disabled', 'false');
             letter.removeEventListener('click', openLetter);
             letter.addEventListener('click', openLetter);
         });
     }
-    
+        
     function startTextSequence() {
-         initialText.classList.remove('d-none');
+          initialText.classList.remove('d-none');
 
-         timer1 = setTimeout(() => {
-             if (!magicActivated) {
-                 initialText.classList.add('d-none');
-                 sequence2.classList.remove('d-none');
-             }
-         }, TIME_1);
+          timer1 = setTimeout(() => {
+              if (!magicActivated) {
+                  initialText.classList.add('d-none');
+                  sequence2.classList.remove('d-none');
+              }
+          }, TIME_1);
 
-         timer2 = setTimeout(() => {
-             if (!magicActivated) {
-                 sequence2.classList.add('d-none');
-                 sequence3.classList.remove('d-none');
-             }
-         }, TIME_2);
+          timer2 = setTimeout(() => {
+              if (!magicActivated) {
+                  sequence2.classList.add('d-none');
+                  sequence3.classList.remove('d-none');
+              }
+          }, TIME_2);
 
-         timer3 = setTimeout(() => {
-             if (!magicActivated) {
-                 sequence3.classList.add('d-none');
-                 callToAction.classList.remove('d-none');
-                 callToAction.classList.add('blinking');
+          timer3 = setTimeout(() => {
+              if (!magicActivated) {
+                  sequence3.classList.add('d-none');
+                  callToAction.classList.remove('d-none');
+                  callToAction.classList.add('blinking');
 
-                 document.body.style.cursor = 'pointer';
-                 document.addEventListener('click', handleMagicClick);
-             }
-         }, TIME_3);
-     }
+                  document.body.style.cursor = 'pointer';
+                  document.addEventListener('click', handleMagicClick);
+              }
+          }, TIME_3);
+    }
 
     function handleMagicClick() {
         if (magicActivated || callToAction.classList.contains('d-none')) {
@@ -193,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         songName.classList.remove('d-none');
         finalGreeting.classList.remove('d-none');
-
         songName.style.opacity = '1';
         finalGreeting.style.opacity = '1';
 
@@ -223,21 +175,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wasPlayingBeforeOpen) {
             currentAudio.pause();
             isPlaying = false;
-           }
+        }
 
         if (letterType === 'left') {
+            title = '';
+
             htmlContent = `
             <div style="
-                  max-width: 90vw;
-                  max-height: 70vh;
-                  overflow-y: auto; 
-                  margin: 0px auto; 
-                  padding: 5px 10px 5px 10px; 
-                  line-height: 1; 
-                  font-family: 'Gochi Hand', cursive; 
-                  color: #333;
-                  text-align: left;
-                  font-size: 0.9rem; 
+                 max-width: 90vw;
+                 max-height: 70vh;
+                 overflow-y: auto; 
+                 margin: 0px auto; 
+                 padding: 5px 10px 5px 10px; 
+                 line-height: 1; 
+                 font-family: 'Gochi Hand', cursive; 
+                 color: #333;
+                 text-align: left;
+                 font-size: 0.9rem; 
             ">
             
             <p style="text-align: right; margin-bottom: 25px; font-style: italic; font-size: 0.8rem;">
@@ -245,34 +199,34 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
             
             <p style="margin-bottom: 20px; font-weight: bold; font-size: 1rem;">
-                  Mi Querido Súper Esposo,
+                 Mi Querido Súper Esposo,
             </p>
             
             <p style="text-align: justify; margin-bottom: 15px; text-indent: 5ch;">
-                  En esta noche mágica, recuerda que mi corazón te busca siempre en cada estrella que parpadea. Aunque la distancia nos separe, quiero que sepas que cada latido de mi corazón lleva tu nombre, y cada milisegundo mi alma viaja hasta donde estás tú. 
+                 En esta noche mágica, recuerda que mi corazón te busca siempre en cada estrella que parpadea. Aunque la distancia nos separe, quiero que sepas que cada latido de mi corazón lleva tu nombre, y cada milisegundo mi alma viaja hasta donde estás tú. 
             </p>
 
             <p style="text-align: justify; margin-bottom: 15px; text-indent: 5ch;">
-                  Te amoOOOoo contando todas las luces navideñas, todas las estrellas, árboles y mucho más, no olvides multiplicarlo por el infinito cuando termines amor.
+                 Te amoOOOoo contando todas las luces navideñas, todas las estrellas, árboles y mucho más, no olvides multiplicarlo por el infinito cuando termines amor.
             </p>
             
             <p style="text-align: justify; margin-bottom: 25px; text-indent: 5ch;">
-                  Gracias por ser la luz que ilumina mi vida, el que con solo una sonrisa convierte un frío diciembre en la más hermosa de las primaveras.
+                 Gracias por ser la luz que ilumina mi vida, el que con solo una sonrisa convierte un frío diciembre en la más hermosa de las primaveras.
             </p>
             
             <p style="text-align: right; margin-top: 20px; font-size: 0.95rem;">
-                  Con todo mi amor,
+                 Con todo mi amor,
             </p>
             <p style="text-align: right; font-style: italic; font-weight: bold; font-size: 1.1rem; margin-top: 2px;">
-                  Tu Reyna
+                 Tu Reyna
             </p>
             </div>
             `;
-             customSwalClass = 'swal-cute-christmas';
+            customSwalClass = 'swal-cute-christmas';
         } else if (letterType === 'right') {
-             title = 'Sabías Que...';
+            title = 'Sabías Que...';
 
-             htmlContent = `
+            htmlContent = `
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
                     <p id="dynamic-text-placeholder" style="font-size: 1.4rem; font-weight: bold; height: 30px; margin-top: 15px; color: #1a4d3a; opacity: 0; transition: opacity 0.3s ease-in-out;"></p>
                     
@@ -330,11 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                     setTimeout(showNextText, interval);
                                 } else {
                                     const videoHTML = `
-                                        <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 10px;">
-                                            <source src="video/video1.mp4" type="video/mp4">
-                                            Ups hay un pequeño problema.
-                                        </video>
-                                    `;
+                                         <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 10px;">
+                                             <source src="video/video1.mp4" type="video/mp4">
+                                             Ups hay un pequeño problema.
+                                         </video>
+                                     `;
                                     videoPlaceholder.innerHTML = videoHTML;
 
                                     const videoElement = document.getElementById('letter-video');
@@ -366,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('load', () => {
-        document.body.classList.add('dark-mode'); 
         
         startTextSequence();
         if (!magicActivated) {
