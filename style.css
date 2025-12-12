@@ -9,6 +9,7 @@ body {
 #christmas-scene {
     opacity: 0.15;
     transition: opacity 1s ease-in-out; 
+    height: 100dvh;
 }
 
 :root {
@@ -614,6 +615,10 @@ header {
     #final-greeting {
         top: -125px;
         left: 30%;
+    }
+
+    #snow-footer {
+        bottom: -15px;
     }
     
     
