@@ -346,17 +346,11 @@ header {
     transition: transform 0.3s ease-out;
 }
 
-footer {
-    z-index: 20 !important; 
-    position: relative;
-}
-
 .present-box {
     width: 120px;
     height: 90px;
     border-radius: 10px;
     position: relative;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); 
 }
 
 .red-box {
@@ -373,13 +367,6 @@ footer {
         #f7dc6f 30px
     );
     border: 3px solid #f3b712;
-}
-
-.open-box {
-    transform: none;
-    box-shadow: 
-    inset 0 5px 5px rgba(0, 0, 0, 0.1), 
-    0 3px 5px rgba(0, 0, 0, 0.2); 
 }
 
 .ribbon-v,
@@ -605,15 +592,17 @@ footer {
 
 /* Nieve acumulada */
 
-/* Estilos Generales para la Onda (ya los tenías) */
-.wave1 {
-    position: absolute; 
+#snow-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    /* Mantenemos una altura base fija por si acaso */
-    height: 140px; 
-    bottom: 0; 
-    background: transparent;
-    z-index: 125 !important;
+    height: 100px;
+    z-index: 125;
+    background-color: white;
+    box-shadow: 0 -5px 10px rgba(255, 255, 255, 0.5);
+    border-top-left-radius: 50% 10px;
+    border-top-right-radius: 50% 10px;
 }
 
 @media screen and (max-width: 768px){
@@ -626,15 +615,7 @@ footer {
         top: -125px;
         left: 30%;
     }
-    .wave1 {
-        /*
-        Usamos 30vh (30% de la altura de la pantalla) o ajusta según la necesidad.
-        Esto le da suficiente altura para cubrir el tronco y los regalos.
-        */
-        height: 30vh;
-        /* Aseguramos que se pegue al borde inferior de la pantalla */
-        bottom: 0; 
-    }
+    
     
     .tree-fixed-size {
         width: 90%; 
