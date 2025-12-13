@@ -491,10 +491,10 @@ header {
 .letter-container.open-state::before {
     content: '';
     position: absolute;
-    top: -20px;
+    top: 0;
     right: 4px;
     width: 90%;
-    height: 45px;
+    height: 60px;
     background-color: rgb(163, 230, 241);
     border: 2px solid #bdc3c7;
     border-bottom: none;
@@ -504,7 +504,7 @@ header {
 }
 
 .letter-container.open-state .small-heart {
-    top: -13px;
+    top: 18px;
     font-size: 2rem;
     transition: all 0.5s ease;
     z-index: 10;
@@ -607,13 +607,18 @@ header {
 }
 
 @media screen and (max-width: 768px){
+
+    #song-title,
+#song-title span {
+    font-size: 20px;
+}
     #song-name {
-        top: -140px;
+        top: -130px;
         left: 45%;
     }
 
     #final-greeting {
-        top: -125px;
+        top: -115px;
         left: 30%;
     }
 
@@ -641,9 +646,12 @@ header {
     #tree-trunk {
         bottom: -85px;
     }
+    .present-box {
+    height: 110px;
+}
 
     .gift-box {
-        top: -76px;
+        top: -36px;
         transform: translateY(5px);
     }
     #mistletoe { top: 40%; left: 9%; }
