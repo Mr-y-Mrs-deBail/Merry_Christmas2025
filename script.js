@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  Con todo mi amor,
             </p>
             <p style="text-align: right; font-style: italic; font-weight: bold; font-size: 1.1rem; margin-top: 2px;">
-                 Tu Reyna
+                 💋Tu Reyna
             </p>
             </div>
             `;
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             
                             setTimeout(() => {
                                 if (currentText === 'Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!') {
-                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 25px; height: 25px; vertical-align: middle; margin-left: 8px;">`;
+                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 25px; height: 25px; margin-bottom: 20px; vertical-align: middle; margin-left: 8px;">`;
                                     dynamicTextElement.innerHTML = `Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!${imageHTML}`;
 
                                 } else {

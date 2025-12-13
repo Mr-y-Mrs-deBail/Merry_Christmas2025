@@ -258,6 +258,36 @@ header {
 .layer-2-lights { z-index: 5; }
 .layer-3-lights { z-index: 4; }
 
+
+/* 1. Definición de Animaciones para el Brillo y Parpadeo */
+
+/* Animación principal para el efecto de resplandor sutil (pulsación) */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 8px 3px currentColor;
+    }
+    50% {
+        /* Aumenta el radio del desenfoque y la extensión para un brillo más intenso */
+        box-shadow: 0 0 12px 5px currentColor;
+    }
+    100% {
+        box-shadow: 0 0 8px 3px currentColor;
+    }
+}
+
+/* Animación para el parpadeo (efecto de estrella/cielo) */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    25% {
+        opacity: 0.6;
+    }
+    75% {
+        opacity: 1;
+    }
+}
+
 .light {
     display: block;
     width: 12px;
@@ -265,15 +295,43 @@ header {
     border-radius: 50%;
     position: absolute; 
     background-color: currentColor;
-    opacity: 1;
-    
-    /* --- SIMPLIFICACIÓN DEL BOX-SHADOW A UN SOLO HALO --- */
-    box-shadow: 
-        0 0 8px 3px currentColor; /* Una sola sombra fuerte y definida */
-        
-    transition: none;
-    /* will-change está bien aquí */
-    will-change: opacity, box-shadow, transform; /* Añadir transform por si parpadean con scale */
+    opacity: 1;    
+    box-shadow: 0 0 8px 3px currentColor;    
+    animation: glow 4s infinite alternate;     
+    will-change: opacity, box-shadow, transform;
+}
+
+.light {
+    animation: 
+        glow 2s ease-in-out infinite alternate,
+        twinkle 2s linear infinite alternate;
+}
+
+.light-1, .light-4, .light-7, .light-10, .light-13, .light-16, .light-19, .light-22, .light-25, .light-28 {
+    animation-duration: 
+        1s,
+        2s; /* twinkle */
+    animation-delay: 
+        0s,
+        1s;
+}
+
+.light-2, .light-5, .light-8, .light-11, .light-14, .light-17, .light-20, .light-23, .light-26, .light-29 {
+    animation-duration: 
+        4s,
+        3s;
+    animation-delay: 
+        1s,
+        0.5s;
+}
+
+.light-3, .light-6, .light-9, .light-12, .light-15, .light-18, .light-21, .light-24, .light-27, .light-30 {
+    animation-duration: 
+        5s, 
+        4s;
+    animation-delay: 
+        0.5s, 
+        0s;
 }
 
 .light.red { color: var(--light-red); }
