@@ -390,6 +390,7 @@ header {
     height: 90px;
     border-radius: 10px;
     position: relative;
+    box-shadow: 0 0 15px rgba(255, 223, 100, 0.7);
 }
 
 .red-box {
@@ -470,11 +471,6 @@ header {
 
 .gift-box:not(.open-state) .present-box {
     animation: gift-glow 3s infinite ease-in-out;
-}
-
-@keyframes gift-glow {
-    0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
-    50% { box-shadow: 0 0 15px rgba(255, 223, 100, 0.7); }
 }
 
 /* Cartas*/
