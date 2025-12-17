@@ -183,19 +183,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
-
+    
     <script>
-        // Copos de nieve amor
-
         const canvas = document.getElementById('snowCanvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
+    
         let snowflakes = [];
-        const SNOW_COUNT = 15;
-        const SIZES = {
-            SMALL: 1.5,
-            MEDIUM: 3.5,
-            LARGE: 5.5
-        };
+        const SNOW_COUNT = 20; 
         
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -206,67 +200,61 @@
         resizeCanvas();
         
         class Snowflake {
-            constructor(index) {
-                this.x = Math.random() * canvas.width;
+            constructor() {
+                this.init();
                 this.y = Math.random() * canvas.height;
-                const sizeKeys = Object.keys(SIZES);
-                const randomSizeKey = sizeKeys[Math.floor(Math.random() * sizeKeys.length)];
-                const baseRadius = SIZES[randomSizeKey];
-        
-                this.radius = baseRadius + (Math.random() * 1.5 - 0.75);
-                this.speedY = Math.random() * 1 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.8 + 0.2;
+            }
+            
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = -10;
+                this.radius = Math.random() * 2 + 1; 
                 
-                this.angle = Math.random() * 360; 
-                this.oscillationSpeed = Math.random() * 0.02 + 0.01;
-                this.oscillationAmplitude = Math.random() * 20 + 10;
+                this.speedY = Math.random() * 1.5 + 1.2; 
+                this.speedX = Math.random() * 0.8 - 0.4;
                 
-                this.shape = 'circle';
+                this.opacity = Math.random() * 0.4 + 0.3;
+                
+                this.angle = Math.random() * Math.PI * 2;
+                this.oscSpeed = Math.random() * 0.02 + 0.01;
+                this.amplitude = Math.random() * 1.5 + 0.5;
+            }
+            
+            update() {
+                this.angle += this.oscSpeed;
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.angle) * this.amplitude;
+                
+                if (this.y > canvas.height + 10) {
+                    this.init();
+                }
+                
+                if (this.x > canvas.width + 10) this.x = -5;
+                if (this.x < -10) this.x = canvas.width + 5;
             }
             
             draw() {
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.closePath();
-            }
-            
-            update() {
-                this.angle += this.oscillationSpeed;
-                
-                this.y += this.speedY;
-                this.x += this.speedX + Math.cos(this.angle) * (this.oscillationAmplitude * 0.01);
-                
-                if (this.y > canvas.height) {
-                    this.y = -this.radius; 
-                    this.x = Math.random() * canvas.width;
-                }
-                
-                if (this.x > canvas.width + this.radius) {
-                    this.x = -this.radius;
-                } else if (this.x < -this.radius) {
-                    this.x = canvas.width + this.radius;
-                }
             }
         }
         
-        let animationId = null;
-        
         for (let i = 0; i < SNOW_COUNT; i++) {
-            snowflakes.push(new Snowflake(i)); 
+            snowflakes.push(new Snowflake());
         }
         
         function animateSnow() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            for (const snow of snowflakes) {
-                snow.update();
-                snow.draw();
+            for (let i = 0; i < snowflakes.length; i++) {
+                const flake = snowflakes[i];
+                flake.update();
+                flake.draw();
             }
             
-            animationId = requestAnimationFrame(animateSnow);
+            requestAnimationFrame(animateSnow);
         }
         
         animateSnow();

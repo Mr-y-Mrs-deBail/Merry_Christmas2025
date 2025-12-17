@@ -627,6 +627,11 @@ header {
     color: #E74C3C !important;
 }
 
+.borde-navideno-swal {
+    border: 3px solid #d42426 !important;
+    box-shadow: 0 0 15px rgba(212, 36, 38, 0.4) !important;
+}
+
 /* Snow */
 
 #snowCanvas {

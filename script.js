@@ -178,7 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const letterElement = event.currentTarget;
         const letterType = letterElement.dataset.letter;
         let title, htmlContent;
-        let customSwalClass = 'swal-cute-christmas'; 
+        let customSwalClass = 'swal-cute-christmas';
+        let borderClass = ''; 
 
         letterElement.classList.add('open-state');
 
@@ -244,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div id="video-placeholder" style="margin-top: 25px;"></div>
                 </div>
             `;
+            borderClass = 'borde-navideno-swal';
         }
 
         Swal.fire({
@@ -252,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showConfirmButton: false,
             showCancelButton: false,
             customClass: {
-                popup: customSwalClass, 
+                popup: `${customSwalClass} ${borderClass}`,           
             },
             width: letterType === 'left' ? '85vw' : 500,
             didOpen: (modalElement) => {
@@ -281,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             
                             setTimeout(() => {
                                 if (currentText === 'Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!') {
-                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 35px; height: 35px; vertical-align: middle; margin-left: 8px;">`;
+                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 40px; height: 40px; vertical-align: middle; margin-left: 8px;">`;
                                     dynamicTextElement.innerHTML = `Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!${imageHTML}`;
 
                                 } else {
@@ -295,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     setTimeout(showNextText, interval);
                                 } else {
                                     const videoHTML = `
-                                         <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 50px;">
+                                         <video id="letter-video" width="250" controls autoplay muted playsinline loop style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: black; margin-top: 60px;">
                                              <source src="video/video1.mp4" type="video/mp4">
                                              Ups hay un pequeño problema.
                                          </video>
