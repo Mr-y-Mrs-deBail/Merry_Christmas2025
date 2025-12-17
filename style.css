@@ -777,7 +777,7 @@ header {
 }
 
 .cloud-3 { top: 20%; left: 35%; animation-delay: 4s; }
-.cloud-4 { top: 5%; left: 5%; animation-delay: 6s; }
+.cloud-4 { top: 5%; left: 3%; animation-delay: 6s; }
 .cloud-5 { top: 25%; left: 65%; animation-delay: 8s; z-index: -1; opacity: 0.80; width: 120px; }
 
 @keyframes float {

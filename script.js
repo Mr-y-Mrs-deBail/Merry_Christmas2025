@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             
                             setTimeout(() => {
                                 if (currentText === 'Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!') {
-                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 25px; height: 25px; vertical-align: middle; margin-left: 8px;">`;
+                                    const imageHTML = `<img src="img/osito.gif" alt="MV" style="width: 35px; height: 35px; vertical-align: middle; margin-left: 8px;">`;
                                     dynamicTextElement.innerHTML = `Aunque estemos lejitos uno del otro, podemos estar juntos en nuestros sueños y pensamientos!${imageHTML}`;
 
                                 } else {
