@@ -254,20 +254,16 @@ header {
     width: 100%;
     height: 100%;
 }
+
 .layer-1-lights { z-index: 6; }
 .layer-2-lights { z-index: 5; }
 .layer-3-lights { z-index: 4; }
 
-
-/* 1. Definición de Animaciones para el Brillo y Parpadeo */
-
-/* Animación principal para el efecto de resplandor sutil (pulsación) */
 @keyframes glow {
     0% {
         box-shadow: 0 0 8px 3px currentColor;
     }
     50% {
-        /* Aumenta el radio del desenfoque y la extensión para un brillo más intenso */
         box-shadow: 0 0 12px 5px currentColor;
     }
     100% {
@@ -275,7 +271,6 @@ header {
     }
 }
 
-/* Animación para el parpadeo (efecto de estrella/cielo) */
 @keyframes twinkle {
     0%, 100% {
         opacity: 0.8;
@@ -310,7 +305,7 @@ header {
 .light-1, .light-4, .light-7, .light-10, .light-13, .light-16, .light-19, .light-22, .light-25, .light-28 {
     animation-duration: 
         1s,
-        2s; /* twinkle */
+        2s;
     animation-delay: 
         0s,
         1s;
@@ -471,6 +466,7 @@ header {
     position: absolute;
     color: white;
     font-size: 14px;
+    animation: star-twinkle 3s infinite ease-in-out;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); 
     z-index: 5;
 }
@@ -482,9 +478,18 @@ header {
 }
 
 .stars-box::after {
-    bottom: 10px;
+    top: 1px;
     right: 15px;
     opacity: 0.8;
+}
+
+.gift-box:not(.open-state) .present-box {
+    animation: gift-glow 3s infinite ease-in-out;
+}
+
+@keyframes gift-glow {
+    0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(255, 223, 100, 0.7); }
 }
 
 /* Cartas*/
@@ -544,6 +549,10 @@ header {
     pointer-events: auto; 
     transform: translateX(-50%) translateY(-20px); 
     height: 90px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 
+                0 0 15px rgba(255, 215, 0, 0.5);
+    border: 2px solid #fff;
+    transition: all 0.5s ease;
 }
 
 .letter-container.open-state::before {
@@ -664,62 +673,6 @@ header {
     border-top-right-radius: 50% 10px;
 }
 
-@media screen and (max-width: 768px){
-
-    #song-title,
-#song-title span {
-    font-size: 20px;
-}
-    #song-name {
-        top: -130px;
-        left: 45%;
-    }
-
-    #final-greeting {
-        top: -115px;
-        left: 30%;
-    }
-
-    #snow-footer {
-        bottom: -25px;
-    }
-    
-    
-    .tree-fixed-size {
-        width: 90%; 
-        height: 550px;
-    }
-
-
-    #tree-layers {
-        width: 100vmin;
-        height: 100vmin;
-        top: 345px; 
-    }
-
-    .tree-star-icon {
-        top: -70px;
-    }
-
-    #tree-trunk {
-        bottom: -85px;
-    }
-    .present-box {
-    height: 110px;
-}
-
-    .gift-box {
-        top: -36px;
-        transform: translateY(5px);
-    }
-    #mistletoe { top: 40%; left: 9%; }
-    #candy-cane { top: 25%; right: 10%; }
-
-    .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
-    .star-2 { top: 10%; right: 20%; animation-delay: 1.5s; }
-
-}
-
 /* 🌙 */
 
 #mobile-sky-decorations {
@@ -765,7 +718,6 @@ header {
     background: white;
     transition: transform 0.4s, box-shadow 1.5s ease-in-out;
 }
-
 
 .moon-mask {
     position: absolute;
@@ -818,7 +770,6 @@ header {
     transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out;
 }
 
-
 .star-m-1 { top: 10%; left: 5%; width: 15px; animation-delay: 0.5s; }
 .star-m-2 { top: 55%; left: 90%; width: 8px; animation-delay: 1.2s; }
 .star-m-3 { top: 45%; left: 48%; width: 40px; animation-delay: 0.1s; }
@@ -844,7 +795,6 @@ header {
     transition: filter 1.5s ease-in-out;
 }
 
-
 .cloud-3 { top: 20%; left: 35%; animation-delay: 4s; }
 .cloud-4 { top: 5%; left: 5%; animation-delay: 6s; }
 .cloud-5 { top: 25%; left: 65%; animation-delay: 8s; z-index: -1; opacity: 0.80; width: 120px; }
@@ -852,4 +802,50 @@ header {
 @keyframes float {
     0% { transform: translateX(0); }
     100% { transform: translateX(5%); }
+}
+
+@media screen and (max-width: 768px){
+
+    #song-title,
+    #song-title span {
+        font-size: 20px;
+    }
+    #song-name {
+        top: -130px;
+        left: 45%;
+    }
+    #final-greeting {
+        top: -115px;
+        left: 30%;
+    }
+    #snow-footer {
+        bottom: -25px;
+        height: 80px;
+    }
+    .tree-fixed-size {
+        width: 90%; 
+        height: 550px;
+    }
+    #tree-layers {
+        width: 100vmin;
+        height: 100vmin;
+        top: 345px; 
+    }
+    .tree-star-icon {
+        top: -70px;
+    }
+    #tree-trunk {
+        bottom: -85px;
+    }
+    .present-box {
+        height: 110px;
+    }
+    .gift-box {
+        top: -36px;
+        transform: translateY(5px);
+    }
+    #mistletoe { top: 40%; left: 9%; }
+    #candy-cane { top: 25%; right: 10%; }
+    .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
+    .star-2 { top: 10%; right: 20%; animation-delay: 1.5s; }
 }

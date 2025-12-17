@@ -164,6 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function openLetter(event) {
         if (!magicActivated) return; 
 
+        confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff0000', '#228B22', '#ffffff', '#FFD700', '#ff31f5ff'],        
+        ticks: 200,
+        gravity: 1.2,
+        scalar: 1.2,
+        zIndex: 9999
+    });
+
         const letterElement = event.currentTarget;
         const letterType = letterElement.dataset.letter;
         let title, htmlContent;
