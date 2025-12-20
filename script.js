@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const FINAL_TEXT_TIMEOUT = 20000;
     let timer1, timer2, timer3;
     let finalGreetingTimeout;
+    let cartaIzquierdaLeida = false;
+    let cartaDerechaLeida = false;
+    let retoFinalActivado = false;
 
     function activateChristmasMagic() {
         if (magicActivated) return;
@@ -321,6 +324,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then(() => {
             letterElement.classList.remove('open-state');
 
+            if (letterType === 'left') cartaIzquierdaLeida = true;
+    if (letterType === 'right') cartaDerechaLeida = true;
+
+    if (cartaIzquierdaLeida && cartaDerechaLeida && !retoFinalActivado) {
+        retoFinalActivado = true;
+        iniciarRetoMuerdago();
+    }
+
             if (wasPlayingBeforeOpen) {
                 currentAudio.play();
                 isPlaying = true;
@@ -340,3 +351,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function iniciarRetoMuerdago() {
+    Swal.fire({
+        title: '¡SISTEMA DETENIDO!',
+        text: 'Tu sistema ha detectado un error: No podemos celebrar Navidad sin un beso bajo el muérdago... y parece que el viento se lo llevó amor. ¡Búscalo para activar tu regalo sorpresa!',
+        icon: 'warning',
+        confirmButtonText: 'Lo buscaré',
+        confirmButtonColor: '#d42426',
+        customClass: {
+            popup: 'swal-cute-christmas borde-navideno-swal'
+        }
+  }).then(() => {
+        const muerdago = document.getElementById('mistletoe');
+        
+        // Solo añadimos la clase que tiene todo el estilo
+        muerdago.classList.add('revelado');
+        
+        // El evento de clic se mantiene
+        muerdago.onclick = lanzarPreguntaFinal;
+    });
+}
+
+function lanzarPreguntaFinal() {
+    Swal.fire({
+        title: '¡Lo encontraste! 🌿',
+        text: 'Para confirmar que eres mi Súper Esposo... ¿Dime qué es lo que más desea tu Reyna en esta Navidad?',
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonText: '¡TODAS LAS ANTERIORES! ❤️',
+        denyButtonText: 'Un abrazo infinito',
+        cancelButtonText: 'Mil besos INFINITOS',
+        confirmButtonColor: '#d42426',
+        customClass: {
+            popup: 'swal-cute-christmas borde-navideno-swal'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: '¡Muy bien mi amor! ✨',
+                text: 'Sabía que elegirías súper bien. Ahora... prepárate Mi TODO, tu regalo sorpresa viene en camino...',
+                icon: 'success',
+                confirmButtonColor: '#1a4d3a'
+            });
+            console.log("Listo para enviar Formspree..."); 
+        } else {
+            Swal.fire({
+                text: '¡Ay! Eso me encanta amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más! Intenta otra vez.',
+                confirmButtonText: 'Elegir mejor',
+                confirmButtonColor: '#1a4d3a'
+            }).then(() => {
+                lanzarPreguntaFinal();
+            });
+        }
+    });
+}

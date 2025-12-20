@@ -65,6 +65,7 @@ header {
     z-index: 105 !important; 
     font-family: "Henny Penny", system-ui;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
 }
 
 #song-title,
@@ -581,7 +582,26 @@ header {
     height: 45px;
 }
 
-#mistletoe { top: 5%; left: 5%; }
+#mistletoe {
+    position: absolute;
+    top: 5%;
+    left: -20%;
+    z-index: -1;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    pointer-events: auto;
+    padding: 20px;
+    z-index: 999;
+}
+
+#mistletoe.revelado {
+    position: fixed; 
+    top: 87%;
+    left: 23%;
+    transform: translateX(-50%) translateY(-50%) scale(0.2) rotate(45deg);
+    z-index: 9999;
+}
+
 #candy-cane { top: 21%; right: -5%; }
 
 /* Estrellas */
@@ -831,7 +851,41 @@ header {
         transform: translateY(5px);
     }
     #mistletoe { top: 40%; left: 9%; }
+    #mistletoe.revelado {
+    top: 7%;
+    left: 77%;
+    transform: translateX(-50%) translateY(-50%) scale(0.1) rotate(45deg);
+}
     #candy-cane { top: 25%; right: 10%; }
     .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
     .star-2 { top: 10%; right: 20%; animation-delay: 1.5s; }
 }
+
+
+/* async function enviarFormspree() {
+    // Un aviso sutil mientras se envía
+    Swal.fire({
+        title: '¡Señal enviada! ❤️',
+        text: 'Tu Reyna está recibiendo tu beso bajo el muérdago...',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: { popup: 'swal-cute-christmas' }
+    });
+
+    const formData = new FormData();
+    // Aquí puedes poner el mensaje que quieras recibir en tu correo
+    formData.append('Mensaje', '¡TU ESPOSO COMPLETÓ EL RETO! 🎄');
+    formData.append('Estado', 'Encontró el muérdago y eligió TODAS LAS ANTERIORES');
+
+    try {
+        await fetch("https://formspree.io/f/mojaaejj", {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+        console.log("Notificación enviada con éxito.");
+    } catch (error) {
+        console.error("Error al notificar a Formspree", error);
+    }
+} */
