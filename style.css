@@ -594,6 +594,10 @@ header {
     z-index: 999;
 }
 
+.sin-animacion {
+    transition: none !important;
+}
+
 #mistletoe.revelado {
     position: fixed; 
     top: 87%;
@@ -860,32 +864,3 @@ header {
     .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
     .star-2 { top: 10%; right: 20%; animation-delay: 1.5s; }
 }
-
-
-/* async function enviarFormspree() {
-    // Un aviso sutil mientras se envía
-    Swal.fire({
-        title: '¡Señal enviada! ❤️',
-        text: 'Tu Reyna está recibiendo tu beso bajo el muérdago...',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 3000,
-        customClass: { popup: 'swal-cute-christmas' }
-    });
-
-    const formData = new FormData();
-    // Aquí puedes poner el mensaje que quieras recibir en tu correo
-    formData.append('Mensaje', '¡TU ESPOSO COMPLETÓ EL RETO! 🎄');
-    formData.append('Estado', 'Encontró el muérdago y eligió TODAS LAS ANTERIORES');
-
-    try {
-        await fetch("https://formspree.io/f/mojaaejj", {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-        });
-        console.log("Notificación enviada con éxito.");
-    } catch (error) {
-        console.error("Error al notificar a Formspree", error);
-    }
-} */

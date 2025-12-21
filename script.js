@@ -365,44 +365,136 @@ function iniciarRetoMuerdago() {
   }).then(() => {
         const muerdago = document.getElementById('mistletoe');
         
-        // Solo añadimos la clase que tiene todo el estilo
+        muerdago.classList.add('sin-animacion');
+        
         muerdago.classList.add('revelado');
         
-        // El evento de clic se mantiene
+        setTimeout(() => {
+            muerdago.classList.remove('sin-animacion');
+        }, 50);
+
         muerdago.onclick = lanzarPreguntaFinal;
     });
 }
 
+
+let deseosCumplidos = {
+    besos: false,
+    abrazos: false,
+    siempre: false
+};
+
 function lanzarPreguntaFinal() {
-    Swal.fire({
-        title: '¡Lo encontraste! 🌿',
-        text: 'Para confirmar que eres mi Súper Esposo... ¿Dime qué es lo que más desea tu Reyna en esta Navidad?',
-        showCancelButton: true,
-        showDenyButton: true,
-        confirmButtonText: '¡TODAS LAS ANTERIORES! ❤️',
-        denyButtonText: 'Un abrazo infinito',
-        cancelButtonText: 'Mil besos INFINITOS',
-        confirmButtonColor: '#d42426',
-        customClass: {
-            popup: 'swal-cute-christmas borde-navideno-swal'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
+    const EligioTodo = deseosCumplidos.besos && deseosCumplidos.abrazos && deseosCumplidos.siempre;
+
+    if (EligioTodo) {
+        Swal.fire({
+            title: '¡Última oportunidad, MI AMOR...',
+            text: 'Busque en todos los algoritmos del universo para poder ayudarte, así que elige bien o sino me deberas más besos infinitos de los que ya me debes!',
+            confirmButtonText: '¡TODAS LAS ANTERIORES SON CORRECTAS PORQUE DE TI LO QUIERO TODO! ❤️',
+            confirmButtonColor: '#d42426',
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'swal-cute-christmas'
+            }
+        }).then((result) => {
+    if (result.isConfirmed) {
+
+        Swal.fire({
+            title: '¡Muy bien mi amor!✨',
+            text: 'Sabía que elegirías súper bien, aunque de ti, lo quiero todo todo TODO! y todo de ti es para miiiii! Te ganaste el besito bajo el muérdago y Ahora sí... prepárate Mi TODO, tu regalo sorpresa viene en camino🎁... No te muevas, mantén tus ojitos en la pantalla y prepárate... ¡Tu regalo viene a toda velocidad! 🚀❤️',
+            imageUrl: 'img/besito.png',
+            imageWidth: 200,
+            imageHeight: 250,
+            imageAlt: 'MV',
+            confirmButtonText: 'Esta bien mi Reyna!',
+            confirmButtonColor: '#99ff33',
+            customClass: {
+                popup: 'swal-cute-christmas borde-navideno-swal',
+                confirmButton: 'texto-negro-boton'
+            }
+        }).then((res) => {
+            if (res.isConfirmed) {
+                        const formulario = document.getElementById("form-invisible");
+                        if (formulario) {
+                            const datos = new FormData(formulario);
+                            fetch(formulario.action, {
+                                method: 'POST',
+                                body: datos,
+                                headers: { 'Accept': 'application/json' }
+                            });
+                        }
+
+                Swal.fire({
+                    title: '¡Te amOOOOOOO con toda mi alma y corazón!❤️🎄🎁✨',
+                    text: 'Eres lo mejor que me ha pasado en mi vida, nunca lo olvides!',
+                    showConfirmButton: false,
+                    timer: 9000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'swal-cute-christmas'
+                    }
+                });
+            }
+        });
+    }
+});
+    } else {
+        Swal.fire({
+            title: '¡Lo encontraste Uyyyy!🎉',
+            text: 'Pero aún te queda una prueba más... ¿Dime qué es lo que más desea tu Reyna cada día, cada milisegundo?',
+            showCancelButton: !deseosCumplidos.besos,
+            showDenyButton: !deseosCumplidos.abrazos,
+            showConfirmButton: !deseosCumplidos.siempre,
+            
+            confirmButtonText: 'Estar contigo por siempre CADA MILISEGUNDO TODA LA ETERNIDAD!',
+            denyButtonText: 'Abrazos INFINITOS',
+            cancelButtonText: 'Besos INFINITOS',
+            
+            confirmButtonColor: '#d42426',
+            denyButtonColor: '#e74c3c',
+            cancelButtonColor: '#c54537',
+            
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'swal-cute-christmas'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deseosCumplidos.siempre = true;
+            } else if (result.isDenied) {
+                deseosCumplidos.abrazos = true;
+            } else if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                deseosCumplidos.besos = true;
+            }
+
+            const acabaDeTerminar = deseosCumplidos.besos && deseosCumplidos.abrazos && deseosCumplidos.siempre;
+
+            let mensajeAMostrar = "";
+            
+            if (acabaDeTerminar) {
+                mensajeAMostrar = 'Mmmmmm déjame pensarlo... ay amor... Soy muy ambiciosa. ¡Por supuesto que quiero eso también, pero de ti lo quiero TODO, te lo pondré más fácil, última oportunidad!, te voy a ayudar un poquito amor...';
+            } else {
+                if (result.isConfirmed) {
+                    mensajeAMostrar = 'Uyyy casi amor, pero no es suficiente para mí, ¡necesito más y más de ti! Intenta otra vez!...';
+                } else if (result.isDenied) {
+                    mensajeAMostrar = '¡Ay! Eso me encantaría amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
+                } else {
+                    mensajeAMostrar = '¡Ay! Eso me encantaría amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
+                }
+            }
+
             Swal.fire({
-                title: '¡Muy bien mi amor! ✨',
-                text: 'Sabía que elegirías súper bien. Ahora... prepárate Mi TODO, tu regalo sorpresa viene en camino...',
-                icon: 'success',
-                confirmButtonColor: '#1a4d3a'
-            });
-            console.log("Listo para enviar Formspree..."); 
-        } else {
-            Swal.fire({
-                text: '¡Ay! Eso me encanta amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más! Intenta otra vez.',
-                confirmButtonText: 'Elegir mejor',
-                confirmButtonColor: '#1a4d3a'
+                text: mensajeAMostrar,
+                confirmButtonText: acabaDeTerminar ? 'Aceptar ayuda de tu reina!' : 'Elegir mejor!',
+                confirmButtonColor: '#99ff33',
+                allowOutsideClick: false,
+                customClass: {
+                popup: 'swal-cute-christmas'
+            }
             }).then(() => {
                 lanzarPreguntaFinal();
             });
-        }
-    });
+        });
+    }
 }
