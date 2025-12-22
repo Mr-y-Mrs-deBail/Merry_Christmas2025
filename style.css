@@ -871,7 +871,7 @@ header {
     left: 77%;
     transform: translateX(-50%) translateY(-50%) scale(0.1) rotate(45deg);
 }
-    #candy-cane { top: 25%; right: 10%; }
-    .star-1 { top: 20%; left: 15%; animation-delay: 0.5s; }
-    .star-2 { top: 10%; right: 20%; animation-delay: 1.5s; }
+    #candy-cane { top: 50%; right: 10%; }
+    .star-1 { top: 30%; left: 15%; animation-delay: 0.5s; }
+    .star-2 { top: 35%; right: 20%; animation-delay: 1.5s; }
 }
