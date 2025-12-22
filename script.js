@@ -476,11 +476,11 @@ function lanzarPreguntaFinal() {
                 mensajeAMostrar = 'Mmmmmm déjame pensarlo... ay amor... Soy muy ambiciosa. ¡Por supuesto que quiero eso también, pero de ti lo quiero TODO, te lo pondré más fácil, última oportunidad!, te voy a ayudar un poquito amor...';
             } else {
                 if (result.isConfirmed) {
-                    mensajeAMostrar = 'Uyyy casi amor, pero no es suficiente para mí, ¡necesito más y más de ti! Intenta otra vez!...';
+                    mensajeAMostrar = '¡Ay! Eso me encantaría amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
                 } else if (result.isDenied) {
-                    mensajeAMostrar = '¡Ay! Eso me encantaría amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
+                    mensajeAMostrar = 'Uyyy casi amor, pero no es suficiente para mí, ¡necesito más y más de ti! Intenta otra vez!...';
                 } else {
-                    mensajeAMostrar = '¡Ay! Eso me encantaría amor... pero mi corazón es muy ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
+                    mensajeAMostrar = '¡Ay! Eso también me encantaría amor... pero mi corazón es demasiado ambicioso. ¡Sí quiero eso, pero necesito MUCHÍSIMO más!';
                 }
             }
 
